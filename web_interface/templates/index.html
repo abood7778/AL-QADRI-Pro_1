@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL-QADRI Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00d4aa"/>
+                                <stop offset="100%" style="stop-color:#0ea5e9"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="logo-outer" cx="25" cy="25" r="22" />
+                        <circle class="logo-inner" cx="25" cy="25" r="14" />
+                        <circle class="logo-center" cx="25" cy="25" r="6" />
+                        <path d="M25 12 L32 20 L28 25 L32 30 L25 38 L18 30 L22 25 L18 20 Z" fill="url(#logoGradient)" opacity="0.9"/>
+                    </svg>
+                </div>
+                <div class="logo-text">AL-QADRI <span>Pro</span></div>
+            </div>
+            <div class="nav-actions">
+                <button id="lang-toggle" class="nav-btn">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="lang-label">EN</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Tools Panel -->
+            <aside class="tools-panel">
+                <!-- Filters Section -->
+                <div class="tool-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <span class="section-title" data-i18n="filters">Filters & Effects</span>
+                    </div>
+                    <div class="tools-grid">
+                        <button class="tool-btn" data-action="custom_filter">
+                            <i class="fa-solid fa-droplet"></i>
+                            <span data-i18n="blur">Blur</span>
+                        </button>
+                        <button class="tool-btn" data-action="grayscale">
+                            <i class="fa-solid fa-circle-half-stroke"></i>
+                            <span data-i18n="bw">B&W</span>
+                        </button>
+                        <button class="tool-btn" data-action="laplacian_edge_sharp1">
+                            <i class="fa-solid fa-sun"></i>
+                            <span data-i18n="sharpen">Sharpen</span>
+                        </button>
+                        <button class="tool-btn" data-action="laplacian_edge_sharp2">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span data-i18n="sharp_plus">Sharp+</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detection Section -->
+                <div class="tool-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-crosshairs"></i></div>
+                        <span class="section-title" data-i18n="detection">Detection</span>
+                    </div>
+                    <div class="tools-grid">
+                        <button class="tool-btn" data-action="circle_detection">
+                            <i class="fa-regular fa-circle"></i>
+                            <span data-i18n="circles">Circles</span>
+                        </button>
+                        <button class="tool-btn" data-action="corner_detection">
+                            <i class="fa-solid fa-vector-square"></i>
+                            <span data-i18n="corners">Corners</span>
+                        </button>
+                        <button class="tool-btn full-width" data-action="line_detection">
+                            <i class="fa-solid fa-slash"></i>
+                            <span data-i18n="detect_lines">Detect Lines</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Morphology Section -->
+                <div class="tool-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-shapes"></i></div>
+                        <span class="section-title" data-i18n="morphology">Morphology</span>
+                    </div>
+                    <div class="tools-grid">
+                        <button class="tool-btn" data-action="dilate">
+                            <i class="fa-solid fa-expand"></i>
+                            <span data-i18n="dilate">Dilate</span>
+                        </button>
+                        <button class="tool-btn" data-action="erode">
+                            <i class="fa-solid fa-compress"></i>
+                            <span data-i18n="erode">Erode</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compression Section -->
+                <div class="tool-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fa-solid fa-file-zipper"></i></div>
+                        <span class="section-title" data-i18n="compression">Compression</span>
+                    </div>
+                    <div class="compression-control">
+                        <div class="compression-label">
+                            <span data-i18n="quality">Quality</span>
+                            <span class="compression-value" id="quality-value">50%</span>
+                        </div>
+                        <input type="range" class="compression-slider" id="compression-slider" min="10" max="90" value="50" step="10">
+                    </div>
+                    <div class="tools-grid" style="margin-top: 12px;">
+                        <button class="tool-btn full-width" data-action="compress" id="compress-btn">
+                            <i class="fa-solid fa-download"></i>
+                            <span data-i18n="compress_image">Compress Image</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Workspace -->
+            <main class="workspace-area">
+                <div class="workspace-header">
+                    <div class="workspace-title">
+                        <h2 data-i18n="welcome">Image Studio</h2>
+                        <p data-i18n="subtitle">Upload an image and apply professional effects</p>
+                    </div>
+                    <div class="workspace-actions hidden" id="action-bar">
+                        <button class="action-btn secondary" id="reset-btn">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span data-i18n="reset">Reset</span>
+                        </button>
+                        <button class="action-btn primary" id="download-btn">
+                            <i class="fa-solid fa-download"></i>
+                            <span data-i18n="download">Download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <!-- Upload State -->
+                    <div id="upload-area" class="upload-zone">
+                        <div class="upload-visual">
+                            <div class="upload-inner">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                        </div>
+                        <h3 data-i18n="drag_drop">Drop your image here</h3>
+                        <p data-i18n="or_browse">PNG, JPG, WEBP up to 16MB</p>
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                        <button class="upload-btn" onclick="document.getElementById('file-input').click()" data-i18n="browse_files">
+                            Choose File
+                        </button>
+                    </div>
+
+                    <!-- Preview State -->
+                    <div id="preview-area" class="preview-zone hidden">
+                        <div class="images-compare">
+                            <div class="image-box">
+                                <span class="image-label" data-i18n="original">Original</span>
+                                <img id="original-image" src="" alt="Original">
+                            </div>
+                            <i class="fa-solid fa-arrow-right compare-arrow"></i>
+                            <div class="image-box">
+                                <span class="image-label result" data-i18n="result">Result</span>
+                                <img id="processed-image" src="" alt="Processed">
+                            </div>
+                        </div>
+                        
+                        <div id="details-panel" class="details-bar hidden">
+                            <div class="detail-item">
+                                <span class="detail-label">Action</span>
+                                <span class="detail-value highlight" id="detail-action">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Size</span>
+                                <span class="detail-value" id="detail-size">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Time</span>
+                                <span class="detail-value" id="detail-time">-</span>
+                            </div>
+                            <div class="detail-item" id="detail-extra-container">
+                                <span class="detail-label" id="detail-extra-label">Info</span>
+                                <span class="detail-value highlight" id="detail-extra">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loader -->
+                    <div class="loader hidden" id="loader">
+                        <div class="loader-ring"></div>
+                        <span class="loader-text" data-i18n="processing">Processing...</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='locales.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
